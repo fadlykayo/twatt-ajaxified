@@ -10,21 +10,13 @@ var client = new Twitter({
   access_token_secret: config.access_token_secret
 })
 
-/* GET home page. */
-// router.get('/', function (req, res, next) {
-//   res.send('index')
-// })
-//
-// router.get('/api', function (req, res, next) {
-//   res.send('api')
-// })
-//
-// router.get('/api/twitter', function (req, res) {
-//   res.render('pages/index')
-//   // client.get('statuses/user_timeline', {screen_name: req.query.q}, function (error, tweets, response) {
-//   //   res.send(tweets)
-//   // })
-// })
+router.get('/', function (req, res, next) {
+  res.send('index')
+})
+
+router.get('/api', function (req, res, next) {
+  res.send('api')
+})
 
 // router.post('/search', function (req, res) {
 //   client.get('statuses/user_timeline', {screen_name: req.body.search}, function (error, tweets, response) {
@@ -32,11 +24,16 @@ var client = new Twitter({
 //   })
 // })
 
+router.post('/api/twitter', function (req, res) {
+  client.post('statuses/update', {status: req.body.tweet}, function (error, tweets, response) {
+    res.send(tweets)
+  })
+})
+
 router.get('/api/twitter', function (req, res) {
   client.get('statuses/user_timeline', function (error, tweets, response) {
     res.send(tweets)
   })
-  // res.send('search')
 })
 
 module.exports = router
